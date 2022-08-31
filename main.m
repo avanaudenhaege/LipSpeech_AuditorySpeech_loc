@@ -74,9 +74,9 @@ try
 
         % TODO refactor the way stim sequences are stored
         % so we can avoid using eval
-        Stimuli = eval(blockOrder{iBlock});
+        stimuli = eval(blockOrder{iBlock});
 
-        nbStim = length(Stimuli);
+        nbStim = length(stimuli);
         if cfg.debug.do
             nbStim = 6;
         end
@@ -104,9 +104,9 @@ try
             thisTrial.trial_nb = iTrial;
             thisTrial.key_name = 'n/a';
             thisTrial.block_nb = iBlock;
-            thisTrial.stim_file = Stimuli{iTrial};
+            thisTrial.stim_file = stimuli{iTrial};
             thisTrial.target = false;
-            thisTrial.trial_type = Stimuli{iTrial}(1:3);
+            thisTrial.trial_type = stimuli{iTrial}(1:3);
 
             thisTrial = playTrial(cfg, thisTrial);
 
