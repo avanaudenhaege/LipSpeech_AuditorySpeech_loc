@@ -10,13 +10,17 @@ fprintf('Connected Device is %s \n\n', cfg.testingDevice);
 %% SET THE MAIN VARIABLES
 global  GlobalGroupID GlobalSubjectID GlobalRunNumberID GlobalStimuliID
 
-GlobalGroupID = 'CON'; % input ('Group (HNS-HES-HLS-DES):','s'); %%HNS: Hearing non signers; HES:Hearing early signers; HLS:Hearing late signers; DES:Deaf early signers
-GlobalSubjectID = input('Subject ID (sub-XX): ', 's'); %% (BIDS format for subj name = sub-XX)
+%% HNS: Hearing non signers; HES:Hearing early signers; HLS:Hearing late signers; DES:Deaf early signers
+GlobalGroupID = 'CON'; % input ('Group (HNS-HES-HLS-DES):','s');
+%% (BIDS format for subj name = sub-XX)
+GlobalSubjectID = input('Subject ID (sub-XX): ', 's');
 GlobalRunNumberID = input('Run Number(1 - 2): ', 's');
 
 %% TRIGGER
-cfg.mri.triggerNb = 1;       % num of excluded volumes (first 2 triggers) [NEEDS TO BE CHECKED]
-cfg.mri.triggerKey = 's';         % the keycode for the trigger
+% num of excluded volumes (first 2 triggers) [NEEDS TO BE CHECKED]
+cfg.mri.triggerNb = 1;
+% the keycode for the trigger
+cfg.mri.triggerKey = 's';
 
 %% SETUP OUTPUT DIRECTORY AND OUTPUT FILE
 
@@ -28,7 +32,8 @@ end
 
 output_file_name = [output_directory '/output_file_' GlobalGroupID '_' GlobalSubjectID '_ses-01_task-PhonoLoc_events.tsv'];
 
-logfile = fopen(output_file_name, 'a'); % 'a'== PERMISSION: open or create file for writing; append data to end of file
+% 'a'== PERMISSION: open or create file for writing; append data to end of file
+logfile = fopen(output_file_name, 'a');
 fprintf(logfile, 'onset\tduration\ttrial_type\tstim_name\tloop_duration\tresponse_key\ttarget\ttrial_num\tblock_num\trun_num\tsubjID\tgroupID\n');
 
 %% SET THE STIMULI/CATEGORY
@@ -61,9 +66,12 @@ Fs = 44100;
 numChannels = 2;
 
 % OPEN THE SCREEN
-[wPtr, rect] = Screen('OpenWindow', max(Screen('Screens'))); % open the screen
-Screen('FillRect', wPtr, [0 0 0]); % draw a black rectangle (big as all the monitor) on the back buffer
-Screen ('Flip', wPtr); % flip the buffer, showing the rectangle
+% open the screen
+[wPtr, rect] = Screen('OpenWindow', max(Screen('Screens')));
+% draw a black rectangle (big as all the monitor) on the back buffer
+Screen('FillRect', wPtr, [0 0 0]);
+% flip the buffer, showing the rectangle
+Screen ('Flip', wPtr);
 HideCursor(wPtr);
 
 % STIMULI SETTING
@@ -101,7 +109,7 @@ try  % safety loop: close the screen if code crashes
     %% TRIGGER
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     Screen('TextSize', wPtr, 50); % text size
-    DrawFormattedText(wPtr, '\n READY TO START \n \n - D�tectez le son cible -', ['center'], ['center'], [200 200 200]);
+    DrawFormattedText(wPtr, '\n READY TO START \n \n - Détectez le son cible -', ['center'], ['center'], [200 200 200]);
     Screen('Flip', wPtr);
 
     waitForTrigger(cfg); % this is the function from CPP github
@@ -112,7 +120,7 @@ try  % safety loop: close the screen if code crashes
     Screen('Flip', wPtr);
 
     LoopStart = GetSecs();
-    trial_start = LoopStart; % d�but du run
+    trial_start = LoopStart; % start of run
 
     WaitSecs(8); % wait 8sec at the beginning of the run
 
@@ -204,11 +212,23 @@ try  % safety loop: close the screen if code crashes
 
             loop_end = GetSecs();
 
-            fprintf(logfile, '%.2f\t%.2f\t%s\t%s\t%.2f\t%s\t%d\t%d\t%d\t%s\t%s\t%s\n', time_stim - LoopStart, slength, Stimuli{n}(1:3), Stimuli{n}, loop_end - Stim_start, responseKey, TAR, n, b, GlobalRunNumberID, GlobalSubjectID, GlobalGroupID);
+            fprintf(logfile, '%.2f\t%.2f\t%s\t%s\t%.2f\t%s\t%d\t%d\t%d\t%s\t%s\t%s\n', ...
+                    time_stim - LoopStart, ...
+                    slength, ...
+                    Stimuli{n}(1:3), ...
+                    Stimuli{n}, ...
+                    loop_end - Stim_start, ...
+                    responseKey, ...
+                    TAR, ...
+                    n, ...
+                    b, ...
+                    GlobalRunNumberID, ...
+                    GlobalSubjectID, ...
+                    GlobalGroupID);
 
             %             %%%%%to make a quick check%%%%REMOVE WHILE TESTING
             %         disp(strcat('delay to onset stim: ', num2str(time_stim-Stim_start)));
-            %         disp(strcat('trial duration � partir du lancement du son: ', num2str(loop_end-time_stim)));
+            %         disp(strcat('trial duration a partir du lancement du son: ', num2str(loop_end-time_stim)));
             %         disp(strcat('trial duration en comptant toute la boucle stim(load le son etc): ', num2str(loop_end-Stim_start)));
             %         disp(strcat('delay between (time_stim+trial_duration) et loop_end: ', num2str(loop_end-(time_stim+trial_duration))));
 
@@ -253,7 +273,19 @@ try  % safety loop: close the screen if code crashes
 
                 loop_end = GetSecs();
 
-                fprintf(logfile, '%.2f\t%.2f\t%s\t%s\t%.2f\t%s\t%d\t%d\t%d\t%s\t%s\t%s\n', time_stim - LoopStart, slength, 'target', targ_sound, loop_end - Stim_start, responseKey, TAR, n, b, GlobalRunNumberID, GlobalSubjectID, GlobalGroupID);
+                fprintf(logfile, '%.2f\t%.2f\t%s\t%s\t%.2f\t%s\t%d\t%d\t%d\t%s\t%s\t%s\n', ...
+                        time_stim - LoopStart, ...
+                        length, ...
+                        'target', ...
+                        targ_sound, ...
+                        loop_end - Stim_start, ...
+                        responseKey, ...
+                        TAR, ...
+                        n, ...
+                        b, ...
+                        GlobalRunNumberID, ...
+                        GlobalSubjectID, ...
+                        GlobalGroupID);
 
                 trial_start = trial_start + target_duration;
                 TAR = 0; % reset the Target hunter as 0 (==no target stimulus)
@@ -295,7 +327,7 @@ try  % safety loop: close the screen if code crashes
     disp(strcat('Timing : the run took (min)', num2str((loop_duration) / 60)));
     disp(strcat('Timing : the run took (sec)', num2str(loop_duration)));
 
-    % FILL the time difference with baseline (due to random n� of targets)
+    % FILL the time difference with baseline (due to random nb of targets)
     % Draw THE FIX CROSS
     Screen('DrawLines', wPtr, crossLines, crossWidth, crossColor, [screenCenterX, screenCenterY]);
     % Flip the screen
@@ -321,4 +353,13 @@ end
 WaitSecs(1); % wait 1 sec before to finish
 
 cd('output_files');
-save(strcat (GlobalSubjectID, '_', GlobalStimuliID, '_Onsetfile_', GlobalRunNumberID, '.mat'), 'Onset', 'Name', 'Duration', 'Resp', 'Onset_target', 'Name_target', 'Duration_target', 'Resp_target', 'IBI_variable');
+save(strcat (GlobalSubjectID, '_', GlobalStimuliID, '_Onsetfile_', GlobalRunNumberID, '.mat'), ...
+     'Onset', ...
+     'Name', ...
+     'Duration', ...
+     'Resp', ...
+     'Onset_target', ...
+     'Name_target', ...
+     'Duration_target', ...
+     'Resp_target', ...
+     'IBI_variable');
