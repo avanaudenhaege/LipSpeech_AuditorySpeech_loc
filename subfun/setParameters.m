@@ -53,8 +53,6 @@ function [cfg] = setParameters()
     cfg.timing.trial_duration = 1.2;
     cfg.timing.target_duration = 1;
 
-    % Time between events in secs
-    cfg.timing.ISI = 6;
     % Time between blocks in secs
     cfg.timing.IBI = 6;
     % Number of seconds before the motion stimuli are presented

@@ -126,11 +126,17 @@ try
             Stimuli = SCRseq10;
         end
 
+        % number of stim
+        N_stim = length(Stimuli);
+
         % Set the target for this block
-        num_targets = [0 1 2]; % it will randomly pick one of these
+        % it will randomly pick one of these
+        num_targets = [0 1 2];
         nT = num_targets(randperm(length(num_targets), 1));
-        [~, idx] = sort(rand(1, N_stim)); % sort randomly the stimuli in the block
-        posT = sort(idx(1:nT)); % select the position of the target(s)
+        % sort randomly the stimuli in the block
+        [~, idx] = sort(rand(1, N_stim));
+        % select the position of the target(s)
+        posT = sort(idx(1:nT));
         disp (strcat('Number of targets in coming trial:', num2str(nT)));
 
         for iTrial = 1:length(Stimuli)
@@ -138,13 +144,12 @@ try
             %  Check for experiment abortion from operator
             checkAbort(cfg, cfg.keyboard.keyboard);
 
-            talkToMe(cfg, sprintf('\n - Running trial %.0f \n', iTrial));
-
             thisTrial.trial_nb = iTrial;
             thisTrial.key_name = 'n/a';
             thisTrial.block_nb = iBlock;
             thisTrial.stim_file = Stimuli{iTrial};
             thisTrial.target = false;
+            thisTrial.trial_type = Stimuli{iTrial}(1:3);
 
             wavfilename = fullfile(cfg.dir.stimuli, thisTrial.stim_file);
             audioData = audioread(wavfilename);
@@ -171,6 +176,9 @@ try
 
             thisTrial.duration = offset - onset;
             thisTrial.onset = onset - cfg.experimentStart;
+
+            ISI = cfg.timing.trial_duration - thisTrial.duration;
+            WaitSecs(ISI);
 
             %% Save the events to the logfile
             % we save event by event so we clear this variable every loop
