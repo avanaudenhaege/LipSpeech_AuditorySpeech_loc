@@ -136,6 +136,10 @@ try
             %  Check for experiment abortion from operator
             checkAbort(cfg, cfg.keyboard.keyboard);
 
+            thisTrial.isStim = logFile.isStim;
+            thisTrial.fileID = logFile.fileID;
+            thisTrial.extraColumns = logFile.extraColumns;
+
             thisTrial.trial_nb = iTrial;
             thisTrial.key_name = 'n/a';
             thisTrial.block_nb = iBlock;
@@ -143,42 +147,11 @@ try
             thisTrial.target = false;
             thisTrial.trial_type = Stimuli{iTrial}(1:3);
 
-            wavfilename = fullfile(cfg.dir.stimuli, thisTrial.stim_file);
-            audioData = audioread(wavfilename);
-            thisTrial.audioData = audioData';
-
-            % Fill the audio playback buffer with the audio data:
-            PsychPortAudio('FillBuffer', cfg.audio.pahandle, thisTrial.audioData);
-
-            % Start audio playback
-            % wait for the playback to start,
-            repetitions = [];
-            when = [];
-            waitForPlaybackStart = 1;
-            onset = PsychPortAudio('Start', cfg.audio.pahandle, repetitions, when, waitForPlaybackStart);
+            thisTrial = playTrial(cfg, thisTrial);
 
             if iTrial == 1
-                block_start = onset;
+                blockStart = thisTrial.onset;
             end
-
-            status.Active = true;
-            while status.Active
-                status = PsychPortAudio('GetStatus', cfg.audio.pahandle);
-            end
-            [~, ~, ~, offset] = PsychPortAudio('Stop', cfg.audio.pahandle);
-
-            thisTrial.duration = offset - onset;
-            thisTrial.onset = onset - cfg.experimentStart;
-
-            ISI = cfg.timing.trial_duration - thisTrial.duration;
-            WaitSecs(ISI);
-
-            %% Save the events to the logfile
-            % we save event by event so we clear this variable every loop
-            thisTrial.isStim = logFile.isStim;
-            thisTrial.fileID = logFile.fileID;
-            thisTrial.extraColumns = logFile.extraColumns;
-            saveEventsFile('save', cfg, thisTrial);
 
             %% if this is a target
             if sum(iTrial == positionTarget) == 1
@@ -187,38 +160,7 @@ try
                 thisTrial.target = true;
                 thisTrial.trial_type = 'target';
 
-                wavfilename = fullfile(cfg.dir.stimuli, thisTrial.stim_file);
-                audioData = audioread(wavfilename);
-                thisTrial.audioData = audioData';
-
-                % Fill the audio playback buffer with the audio data:
-                PsychPortAudio('FillBuffer', cfg.audio.pahandle, thisTrial.audioData);
-
-                % Start audio playback
-                % wait for the playback to start,
-                repetitions = [];
-                when = [];
-                waitForPlaybackStart = 1;
-                onset = PsychPortAudio('Start', cfg.audio.pahandle, repetitions, when, waitForPlaybackStart);
-
-                status.Active = true;
-                while status.Active
-                    status = PsychPortAudio('GetStatus', cfg.audio.pahandle);
-                end
-                [~, ~, ~, offset] = PsychPortAudio('Stop', cfg.audio.pahandle);
-
-                thisTrial.duration = offset - onset;
-                thisTrial.onset = onset - cfg.experimentStart;
-
-                ISI = cfg.timing.target_duration - thisTrial.duration;
-                WaitSecs(ISI);
-
-                %% Save the events to the logfile
-                % we save event by event so we clear this variable every loop
-                thisTrial.isStim = logFile.isStim;
-                thisTrial.fileID = logFile.fileID;
-                thisTrial.extraColumns = logFile.extraColumns;
-                saveEventsFile('save', cfg, thisTrial);
+                thisTrial = playTrial(cfg, thisTrial);
 
             end
 
@@ -239,8 +181,8 @@ try
 
         end
 
-        block_end = GetSecs();
-        block_duration = block_end - block_start;
+        blockEnd = GetSecs();
+        block_duration = (blockEnd - cfg.experimentStart) - blockStart;
         talkToMe(cfg, sprintf('\n\nTiming - Block duration: %0.3f seconds\n\n', block_duration));
 
         WaitSecs(cfg.timing.IBI);
