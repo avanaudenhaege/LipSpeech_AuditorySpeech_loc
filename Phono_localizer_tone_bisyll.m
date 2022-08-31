@@ -47,8 +47,6 @@ SCRseq_order = Shuffle(SCRseq);
 both_seq = [SYLseq_order; SCRseq_order];
 Block_order = both_seq(:)';
 
-% number of blocks in a full run
-N_block = [1:length(Block_order)];
 % number of stim in one block
 N_stim = length(SYLseq01);
 
@@ -297,8 +295,6 @@ try  % safety loop: close the screen if code crashes
         length_IBI = 6;
         WaitSecs(length_IBI);
 
-        IBI_variable(b, 1) = length_IBI;
-
     end % for b(lock)
 
     % Play the sound of the matrix square (pieno/vuoto)
@@ -343,5 +339,4 @@ save(strcat (GlobalSubjectID, '_', GlobalStimuliID, '_Onsetfile_', GlobalRunNumb
      'Onset_target', ...
      'Name_target', ...
      'Duration_target', ...
-     'Resp_target', ...
-     'IBI_variable');
+     'Resp_target');

@@ -1,0 +1,71 @@
+{
+  "onset": {
+    "Description": "time elapsed since experiment start",
+    "Units": "s"
+  },
+  "trial_type": {
+    "Description": "types of trial",
+    "Levels": {
+    }
+  },
+  "duration": {
+    "Description": "duration of the event or the block",
+    "Units": "s"
+  },
+  "stim_file": {
+    "Description": "",
+    "Levels": {
+    },
+    "LongName": "",
+    "TermURL": "",
+    "Units": ""
+  },
+  "stim_name": {
+    "Description": "",
+    "Levels": {
+    },
+    "LongName": "",
+    "TermURL": "",
+    "Units": ""
+  },
+  "loop_duration": {
+    "Description": "",
+    "Levels": {
+    },
+    "LongName": "",
+    "TermURL": "",
+    "Units": ""
+  },
+  "block_nb": {
+    "Description": "",
+    "Levels": {
+    },
+    "LongName": "",
+    "TermURL": "",
+    "Units": ""
+  },
+  "trial_nb": {
+    "Description": "",
+    "Levels": {
+    },
+    "LongName": "",
+    "TermURL": "",
+    "Units": ""
+  },
+  "target": {
+    "Description": "",
+    "Levels": {
+    },
+    "LongName": "",
+    "TermURL": "",
+    "Units": ""
+  },
+  "key_name": {
+    "Description": "",
+    "Levels": {
+    },
+    "LongName": "",
+    "TermURL": "",
+    "Units": ""
+  }
+}

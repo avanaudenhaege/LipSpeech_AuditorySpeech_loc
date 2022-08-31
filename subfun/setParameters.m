@@ -8,8 +8,6 @@ function [cfg] = setParameters()
 
     cfg = struct();
 
-    cfg.expName = 'LipSpeechMVPA';
-
     cfg.dir.root = bids.internal.file_utils(fullfile(fileparts(mfilename('fullpath')), '..'), 'cpath');
     cfg.dir.stimuli = fullfile(cfg.dir.root, 'stimuli');
     cfg.dir.output = fullfile(cfg.dir.root, 'data');
@@ -36,8 +34,9 @@ function [cfg] = setParameters()
     %% Task(s)
 
     % Instruction
-    cfg.task.instructions = '\n READY TO START \n \n - Détectez le son cible -';
-
+    cfg.task.instruction = '\n READY TO START \n \n - Détectez le son cible -';
+    cfg.task.name = 'phonoLocalizer';
+    % cfg.fileName.task = cfg.task.name;
     cfg = setMonitor(cfg);
 
     % Keyboards
@@ -51,15 +50,22 @@ function [cfg] = setParameters()
     %% Experiment Design
 
     % STIMULI SETTING
-    trial_duration = 1.2;
-    target_duration = 1;
+    cfg.timing.trial_duration = 1.2;
+    cfg.timing.target_duration = 1;
 
     % Time between events in secs
     cfg.timing.ISI = 6;
+    % Time between blocks in secs
+    cfg.timing.IBI = 6;
     % Number of seconds before the motion stimuli are presented
-    cfg.timing.onsetDelay = 2;
+    cfg.timing.onsetDelay = 8;
     % Number of seconds after the end all the stimuli before ending the run
     cfg.timing.endDelay = 2;
+
+    if cfg.debug.do
+        cfg.timing.onsetDelay = 0;
+        cfg.timing.endDelay = 0;
+    end
 
     cfg.subject.ask = {'grp', 'run'};
 
@@ -73,7 +79,6 @@ function [cfg] = setParameters()
 
     cfg.extraColumns = {'stim_file', ...
                         'stim_name', ...
-                        'loop_duration', ...
                         'block_nb', ...
                         'trial_nb', ...
                         'target', ...
@@ -101,7 +106,7 @@ function cfg = setMRI(cfg)
 
     cfg.mri.repetitionTime = 1.75;
 
-    cfg.bids.MRI.Instructionss = cfg.task.instructions;
+    cfg.bids.MRI.Instruction = cfg.task.instruction;
     cfg.bids.MRI.TaskDescription = [''];
     cfg.bids.MRI.CogAtlasID = '';
     cfg.bids.MRI.CogPOID = '';
