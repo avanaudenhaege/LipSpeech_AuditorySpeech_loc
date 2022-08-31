@@ -160,7 +160,6 @@ try
     getResponse('stop', cfg.keyboard.responseBox);
     getResponse('release', cfg.keyboard.responseBox);
 
-    % Close the logfiles
     saveEventsFile('close', cfg, logFile);
     createJson(cfg, cfg);
 
