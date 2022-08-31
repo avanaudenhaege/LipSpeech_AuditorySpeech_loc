@@ -34,7 +34,7 @@ function [cfg] = setParameters()
     %% Task(s)
 
     % Instruction
-    cfg.task.instruction = '\n READY TO START \n \n - Détectez le son cible -';
+    cfg.task.instruction = '\n READY TO START \n\n - Détectez le son cible -';
     cfg.task.name = 'phonoLocalizer';
     % cfg.fileName.task = cfg.task.name;
     cfg = setMonitor(cfg);
@@ -52,12 +52,15 @@ function [cfg] = setParameters()
     % STIMULI SETTING
     cfg.timing.trial_duration = 1.2;
     cfg.timing.target_duration = 1;
+    cfg.timing.run_duration = 528;
 
-    % Time between blocks in secs
+    % Time between blocks
     cfg.timing.IBI = 6;
-    % Number of seconds before the motion stimuli are presented
+
+    % delay before 1rst stimulus at the start of a run
     cfg.timing.onsetDelay = 8;
-    % Number of seconds after the end all the stimuli before ending the run
+
+    % delay after the end all the stimuli before ending the run
     cfg.timing.endDelay = 2;
 
     if cfg.debug.do

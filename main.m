@@ -1,20 +1,19 @@
 % Clear all the previous stuff
 clear;
 clc;
-% cleanUp();
 
 if ~ismac
     close all;
     clear Screen;
 end
 
+targSound = 'tone.wav';
+
 % make sure we got access to all the required functions and inputs
 initEnv();
 
 % set and load all the parameters to run the experiment
 cfg = setParameters;
-
-fprintf('Connected Device is %s \n\n', cfg.testingDevice);
 
 cfg = userInputs(cfg);
 
@@ -34,18 +33,15 @@ load sequences;
 setUpRand();
 
 % Set the sequences order
-SYLseq_order = Shuffle(SYLseq);
-SCRseq_order = Shuffle(SCRseq);
+sylSeqOrder = Shuffle(SYLseq);
+scrSeqOrder = Shuffle(SCRseq);
 
 % Set the block order
-both_seq = [SYLseq_order; SCRseq_order];
-Block_order = both_seq(:)';
-
-t = '.wav';
-targ_sound = 'tone.wav';
+bothSeq = [sylSeqOrder; scrSeqOrder];
+blockOrder = bothSeq(:)';
 
 if cfg.debug.do
-    Block_order = Block_order(1:2);
+    blockOrder = blockOrder(1:2);
 end
 
 %%  Experiment
@@ -68,78 +64,74 @@ try
     waitForTrigger(cfg);
 
     drawFixation(cfg);
-    Screen('Flip', cfg.screen.win);
-
-    cfg.experimentStart = GetSecs();
+    cfg.experimentStart = Screen('Flip', cfg.screen.win);
 
     getResponse('start', cfg.keyboard.responseBox);
 
-    % start of run
-    LoopStart = GetSecs();
-    trial_start = LoopStart;
-
     waitFor(cfg, cfg.timing.onsetDelay);
 
-    for iBlock = 1:length(Block_order)
+    for iBlock = 1:length(blockOrder)
 
-        block_start = GetSecs();
-
-        if strcmp(Block_order{iBlock}, 'SYLseq01')
+        if strcmp(blockOrder{iBlock}, 'SYLseq01')
             Stimuli = SYLseq01;
-        elseif strcmp(Block_order{iBlock}, 'SYLseq02')
+        elseif strcmp(blockOrder{iBlock}, 'SYLseq02')
             Stimuli = SYLseq02;
-        elseif strcmp(Block_order{iBlock}, 'SYLseq03')
+        elseif strcmp(blockOrder{iBlock}, 'SYLseq03')
             Stimuli = SYLseq03;
-        elseif strcmp(Block_order{iBlock}, 'SYLseq04')
+        elseif strcmp(blockOrder{iBlock}, 'SYLseq04')
             Stimuli = SYLseq04;
-        elseif strcmp(Block_order{iBlock}, 'SYLseq05')
+        elseif strcmp(blockOrder{iBlock}, 'SYLseq05')
             Stimuli = SYLseq05;
-        elseif strcmp(Block_order{iBlock}, 'SYLseq06')
+        elseif strcmp(blockOrder{iBlock}, 'SYLseq06')
             Stimuli = SYLseq06;
-        elseif strcmp(Block_order{iBlock}, 'SYLseq07')
+        elseif strcmp(blockOrder{iBlock}, 'SYLseq07')
             Stimuli = SYLseq07;
-        elseif strcmp(Block_order{iBlock}, 'SYLseq08')
+        elseif strcmp(blockOrder{iBlock}, 'SYLseq08')
             Stimuli = SYLseq08;
-        elseif strcmp(Block_order{iBlock}, 'SYLseq09')
+        elseif strcmp(blockOrder{iBlock}, 'SYLseq09')
             Stimuli = SYLseq09;
-        elseif strcmp(Block_order{iBlock}, 'SYLseq10')
+        elseif strcmp(blockOrder{iBlock}, 'SYLseq10')
             Stimuli = SYLseq10;
-        elseif strcmp(Block_order{iBlock}, 'SCRseq01')
+        elseif strcmp(blockOrder{iBlock}, 'SCRseq01')
             Stimuli = SCRseq01;
-        elseif strcmp(Block_order{iBlock}, 'SCRseq02')
+        elseif strcmp(blockOrder{iBlock}, 'SCRseq02')
             Stimuli = SCRseq02;
-        elseif strcmp(Block_order{iBlock}, 'SCRseq03')
+        elseif strcmp(blockOrder{iBlock}, 'SCRseq03')
             Stimuli = SCRseq03;
-        elseif strcmp(Block_order{iBlock}, 'SCRseq04')
+        elseif strcmp(blockOrder{iBlock}, 'SCRseq04')
             Stimuli = SCRseq04;
-        elseif strcmp(Block_order{iBlock}, 'SCRseq05')
+        elseif strcmp(blockOrder{iBlock}, 'SCRseq05')
             Stimuli = SCRseq05;
-        elseif strcmp(Block_order{iBlock}, 'SCRseq06')
+        elseif strcmp(blockOrder{iBlock}, 'SCRseq06')
             Stimuli = SCRseq06;
-        elseif strcmp(Block_order{iBlock}, 'SCRseq07')
+        elseif strcmp(blockOrder{iBlock}, 'SCRseq07')
             Stimuli = SCRseq07;
-        elseif strcmp(Block_order{iBlock}, 'SCRseq08')
+        elseif strcmp(blockOrder{iBlock}, 'SCRseq08')
             Stimuli = SCRseq08;
-        elseif strcmp(Block_order{iBlock}, 'SCRseq09')
+        elseif strcmp(blockOrder{iBlock}, 'SCRseq09')
             Stimuli = SCRseq09;
-        elseif strcmp(Block_order{iBlock}, 'SCRseq10')
+        elseif strcmp(blockOrder{iBlock}, 'SCRseq10')
             Stimuli = SCRseq10;
         end
 
         % number of stim
-        N_stim = length(Stimuli);
+        nbStim = length(Stimuli);
+        if cfg.debug.do
+            nbStim = 6;
+        end
 
         % Set the target for this block
         % it will randomly pick one of these
-        num_targets = [0 1 2];
-        nT = num_targets(randperm(length(num_targets), 1));
+        possibleNumberOfTargets = [0 1 2];
+        nbTargets = possibleNumberOfTargets(randperm(length(possibleNumberOfTargets), 1));
         % sort randomly the stimuli in the block
-        [~, idx] = sort(rand(1, N_stim));
+        [~, idx] = sort(rand(1, nbStim));
         % select the position of the target(s)
-        posT = sort(idx(1:nT));
-        disp (strcat('Number of targets in coming trial:', num2str(nT)));
+        positionTarget = sort(idx(1:nbTargets));
 
-        for iTrial = 1:length(Stimuli)
+        talkToMe(cfg, sprintf('\nNumber of targets in coming trial: %i\n\n', nbTargets));
+
+        for iTrial = 1:nbStim
 
             %  Check for experiment abortion from operator
             checkAbort(cfg, cfg.keyboard.keyboard);
@@ -159,14 +151,15 @@ try
             PsychPortAudio('FillBuffer', cfg.audio.pahandle, thisTrial.audioData);
 
             % Start audio playback
-            % 'repetitions' repetitions of the sound data,
-            % start it immediately (0)
             % wait for the playback to start,
-            % return onset timestamp.
             repetitions = [];
             when = [];
             waitForPlaybackStart = 1;
             onset = PsychPortAudio('Start', cfg.audio.pahandle, repetitions, when, waitForPlaybackStart);
+
+            if iTrial == 1
+                block_start = onset;
+            end
 
             status.Active = true;
             while status.Active
@@ -187,6 +180,48 @@ try
             thisTrial.extraColumns = logFile.extraColumns;
             saveEventsFile('save', cfg, thisTrial);
 
+            %% if this is a target
+            if sum(iTrial == positionTarget) == 1
+
+                thisTrial.stim_file = targSound;
+                thisTrial.target = true;
+                thisTrial.trial_type = 'target';
+
+                wavfilename = fullfile(cfg.dir.stimuli, thisTrial.stim_file);
+                audioData = audioread(wavfilename);
+                thisTrial.audioData = audioData';
+
+                % Fill the audio playback buffer with the audio data:
+                PsychPortAudio('FillBuffer', cfg.audio.pahandle, thisTrial.audioData);
+
+                % Start audio playback
+                % wait for the playback to start,
+                repetitions = [];
+                when = [];
+                waitForPlaybackStart = 1;
+                onset = PsychPortAudio('Start', cfg.audio.pahandle, repetitions, when, waitForPlaybackStart);
+
+                status.Active = true;
+                while status.Active
+                    status = PsychPortAudio('GetStatus', cfg.audio.pahandle);
+                end
+                [~, ~, ~, offset] = PsychPortAudio('Stop', cfg.audio.pahandle);
+
+                thisTrial.duration = offset - onset;
+                thisTrial.onset = onset - cfg.experimentStart;
+
+                ISI = cfg.timing.target_duration - thisTrial.duration;
+                WaitSecs(ISI);
+
+                %% Save the events to the logfile
+                % we save event by event so we clear this variable every loop
+                thisTrial.isStim = logFile.isStim;
+                thisTrial.fileID = logFile.fileID;
+                thisTrial.extraColumns = logFile.extraColumns;
+                saveEventsFile('save', cfg, thisTrial);
+
+            end
+
             %% Collect and saves the responses
             responseEvents = getResponse('check', cfg.keyboard.responseBox, cfg);
             if isfield(responseEvents(1), 'onset') && ~isempty(responseEvents(1).onset)
@@ -206,27 +241,34 @@ try
 
         block_end = GetSecs();
         block_duration = block_end - block_start;
-        disp (strcat('Block duration: ', num2str(block_duration)));
+        talkToMe(cfg, sprintf('\n\nTiming - Block duration: %0.3f seconds\n\n', block_duration));
 
         WaitSecs(cfg.timing.IBI);
 
     end
 
-    % End of the run
-    waitFor(cfg, cfg.timing.endDelay);
-
-    LoopEnd = GetSecs();
-    loop_duration = (LoopEnd - LoopStart);
+    loopDuration = (GetSecs() - cfg.experimentStart);
+    loopDurationMin = floor(loopDuration / 60);
+    loopDurationSec = mod(loopDuration, 60);
+    talkToMe(cfg, sprintf('\n\nTiming - Run lasted %i minutes %0.3f seconds\n\n', ...
+                          loopDurationMin, ...
+                          loopDurationSec));
 
     getResponse('stop', cfg.keyboard.responseBox);
+    getResponse('release', cfg.keyboard.responseBox);
 
     % Close the logfiles
     saveEventsFile('close', cfg, logFile);
     createJson(cfg, cfg);
 
-    cfg = getExperimentEnd(cfg);
+    % Pad the runtime to make sure all runs have same duraton
+    % (due to random nb of targets)
+    endDelay = cfg.timing.run_duration - loopDuration;
+    if ~cfg.debug.do
+        WaitSecs(endDelay);
+    end
 
-    getResponse('release', cfg.keyboard.responseBox);
+    cfg = getExperimentEnd(cfg);
 
     farewellScreen(cfg, 'Fin de l''experience :)\nMERCI !');
 
