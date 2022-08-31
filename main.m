@@ -72,49 +72,10 @@ try
 
     for iBlock = 1:length(blockOrder)
 
-        if strcmp(blockOrder{iBlock}, 'SYLseq01')
-            Stimuli = SYLseq01;
-        elseif strcmp(blockOrder{iBlock}, 'SYLseq02')
-            Stimuli = SYLseq02;
-        elseif strcmp(blockOrder{iBlock}, 'SYLseq03')
-            Stimuli = SYLseq03;
-        elseif strcmp(blockOrder{iBlock}, 'SYLseq04')
-            Stimuli = SYLseq04;
-        elseif strcmp(blockOrder{iBlock}, 'SYLseq05')
-            Stimuli = SYLseq05;
-        elseif strcmp(blockOrder{iBlock}, 'SYLseq06')
-            Stimuli = SYLseq06;
-        elseif strcmp(blockOrder{iBlock}, 'SYLseq07')
-            Stimuli = SYLseq07;
-        elseif strcmp(blockOrder{iBlock}, 'SYLseq08')
-            Stimuli = SYLseq08;
-        elseif strcmp(blockOrder{iBlock}, 'SYLseq09')
-            Stimuli = SYLseq09;
-        elseif strcmp(blockOrder{iBlock}, 'SYLseq10')
-            Stimuli = SYLseq10;
-        elseif strcmp(blockOrder{iBlock}, 'SCRseq01')
-            Stimuli = SCRseq01;
-        elseif strcmp(blockOrder{iBlock}, 'SCRseq02')
-            Stimuli = SCRseq02;
-        elseif strcmp(blockOrder{iBlock}, 'SCRseq03')
-            Stimuli = SCRseq03;
-        elseif strcmp(blockOrder{iBlock}, 'SCRseq04')
-            Stimuli = SCRseq04;
-        elseif strcmp(blockOrder{iBlock}, 'SCRseq05')
-            Stimuli = SCRseq05;
-        elseif strcmp(blockOrder{iBlock}, 'SCRseq06')
-            Stimuli = SCRseq06;
-        elseif strcmp(blockOrder{iBlock}, 'SCRseq07')
-            Stimuli = SCRseq07;
-        elseif strcmp(blockOrder{iBlock}, 'SCRseq08')
-            Stimuli = SCRseq08;
-        elseif strcmp(blockOrder{iBlock}, 'SCRseq09')
-            Stimuli = SCRseq09;
-        elseif strcmp(blockOrder{iBlock}, 'SCRseq10')
-            Stimuli = SCRseq10;
-        end
+        % TODO refactor the way stim sequences are stored
+        % so we can avoid using eval
+        Stimuli = eval(blockOrder{iBlock});
 
-        % number of stim
         nbStim = length(Stimuli);
         if cfg.debug.do
             nbStim = 6;
