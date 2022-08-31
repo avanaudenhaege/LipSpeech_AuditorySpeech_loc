@@ -80,10 +80,9 @@ target_duration = 1;
 
 % STIMULUS RECTANGLE (in the center)
 screenWidth = rect(3);
-screenHeight = rect(4); % -(rect(4)/3); %this part is to have it on the top of te screen
+screenHeight = rect(4);
 screenCenterX = screenWidth / 2;
 screenCenterY = screenHeight / 2;
-% stimulusRect=[screenCenterX-stimSize/2 screenCenterY-stimSize/2 screenCenterX+stimSize/2 screenCenterY+stimSize/2];
 
 % STIMULI FOLDER
 
@@ -170,7 +169,6 @@ try  % safety loop: close the screen if code crashes
             Stimuli = SCRseq10;
         end
 
-        %        Stimuli=strcat(Stimuli,t); % if need to add .wav extension
         % Set the target for this block
         num_targets = [0 1 2]; % it will randomly pick one of these
         nT = num_targets(randperm(length(num_targets), 1));
@@ -178,7 +176,7 @@ try  % safety loop: close the screen if code crashes
         posT = sort(idx(1:nT)); % select the position of the target(s)
         disp (strcat('Number of targets in coming trial:', num2str(nT)));
 
-        %% stimulus loop %%%%%%%%%%%%%
+        %% stimulus loop
         for n = 1:length(Stimuli) %% num of stimuli in each block
             Stim_start = GetSecs();
             keyIsDown = 0;
@@ -225,12 +223,6 @@ try  % safety loop: close the screen if code crashes
                     GlobalRunNumberID, ...
                     GlobalSubjectID, ...
                     GlobalGroupID);
-
-            %             %%%%%to make a quick check%%%%REMOVE WHILE TESTING
-            %         disp(strcat('delay to onset stim: ', num2str(time_stim-Stim_start)));
-            %         disp(strcat('trial duration a partir du lancement du son: ', num2str(loop_end-time_stim)));
-            %         disp(strcat('trial duration en comptant toute la boucle stim(load le son etc): ', num2str(loop_end-Stim_start)));
-            %         disp(strcat('delay between (time_stim+trial_duration) et loop_end: ', num2str(loop_end-(time_stim+trial_duration))));
 
             trial_start = trial_start + trial_duration;
             TAR = 0; % reset the Target hunter as 0 (==no target stimulus);
@@ -302,18 +294,8 @@ try  % safety loop: close the screen if code crashes
         block_duration = block_end - block_start;
         disp (strcat('Block duration: ', num2str(block_duration)));
 
-        %                             %Draw THE FIX CROSS
-        %                     Screen('DrawLines',wPtr,crossLines,crossWidth,crossColor,[screenCenterX,screenCenterY]);
-        %                     % Flip the screen
-        %                     cross_time= Screen('Flip', wPtr);
-
-        % % %         if rem(b,length(All_cat))==0
-        % % %             WaitSecs(13);%if we are in the block 4-8-12-16 wait 16 sec before to finish the block
-        % % %         else
-
         length_IBI = 6;
         WaitSecs(length_IBI);
-        % % %         end
 
         IBI_variable(b, 1) = length_IBI;
 
