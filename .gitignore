@@ -10,8 +10,10 @@ __MACOSX
 *.zip
 
 # data
-*.tsv
-*.json
+data/**.json
+data/**.json
+data/**.mat
+data/**.tsv
 
 ## MATLAB / OCTAVE gitignore template
 
