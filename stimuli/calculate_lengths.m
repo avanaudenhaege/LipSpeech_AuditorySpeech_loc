@@ -17,7 +17,8 @@ fclose(fid);
 
 duration = cell(2, nsnd); 
 
-output = fopen('lengths_stim.tsv','a');%'a'== PERMISSION: open or create file for writing; append data to end of file
+%'a'== PERMISSION: open or create file for writing; append data to end of file
+output = fopen('lengths_stim.tsv','a');
 fprintf(output, 'stim\tduration\n');
 
 fid = fopen('name_stim.txt');
