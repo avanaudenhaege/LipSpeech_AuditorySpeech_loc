@@ -43,6 +43,7 @@ SYLseq01 = strcat('SYL', seq01); % create the SYL and SCR vectors
 SCRseq01 = strcat('SCR', seq01);
 
 seq02 = randStim(16:30); %take the 20 next, and so on. 
+
 SYLseq02 = strcat('SYL', seq02);
 SCRseq02 = strcat('SCR', seq02);
 
@@ -111,5 +112,6 @@ clear('ans', 'data', 'fid', 'index', 'indexrand', 'item', 'itemNext', 'randStim'
 output = strcat(cd, '\sequencesNEW');
 save(output); 
 
+output_file = fullfile(fileparts(mfilename('fullpath')), '..', 'sequences-NEW.mat');
 
-
+save(output_file);
