@@ -143,8 +143,8 @@ try
         end
 
         blockEnd = GetSecs();
-        block_duration = (blockEnd - cfg.experimentStart) - blockStart;
-        talkToMe(cfg, sprintf('\n\nTiming - Block duration: %0.3f seconds\n\n', block_duration));
+        blockDuration = (blockEnd - cfg.experimentStart) - blockStart;
+        talkToMe(cfg, sprintf('\n\nTiming - Block duration: %0.3f seconds\n\n', blockDuration));
 
         WaitSecs(cfg.timing.IBI);
 

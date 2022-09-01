@@ -1,11 +1,10 @@
 function [cfg] = setParameters()
 
-    cfg.text.size = 50;
-
+    
     % Initialize the parameters and general configuration variables
-
+    
     cfg = struct();
-
+    
     cfg.dir.root = bids.internal.file_utils(fullfile(fileparts(mfilename('fullpath')), '..'), 'cpath');
     cfg.dir.stimuli = fullfile(cfg.dir.root, 'stimuli');
     cfg.dir.output = fullfile(cfg.dir.root, 'data');
@@ -32,6 +31,7 @@ function [cfg] = setParameters()
     %% Task(s)
 
     % Instruction
+    cfg.text.size = 50;
     cfg.task.instruction = '\n READY TO START \n\n - Détectez le son cible -';
     cfg.task.name = 'phonoLocalizer';
 
@@ -123,8 +123,8 @@ function cfg = setMonitor(cfg)
     cfg.screen.monitorDistance = 40; % distance from the screen in cm
 
     if strcmpi(cfg.testingDevice, 'mri')
-        cfg.screen.monitorWidth = 25;
-        cfg.screen.monitorDistance = 95;
+        cfg.screen.monitorWidth = 69.8;
+        cfg.screen.monitorDistance = 170;
     end
 
 end
