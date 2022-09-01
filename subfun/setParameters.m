@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP visual motion localizer developpers
-
 function [cfg] = setParameters()
 
     cfg.text.size = 50;
@@ -36,7 +34,7 @@ function [cfg] = setParameters()
     % Instruction
     cfg.task.instruction = '\n READY TO START \n\n - Détectez le son cible -';
     cfg.task.name = 'phonoLocalizer';
-    % cfg.fileName.task = cfg.task.name;
+
     cfg = setMonitor(cfg);
 
     % Keyboards
@@ -50,9 +48,9 @@ function [cfg] = setParameters()
     %% Experiment Design
 
     % STIMULI SETTING
-    cfg.timing.trial_duration = 1.2;
-    cfg.timing.target_duration = 1;
-    cfg.timing.run_duration = 528;
+    cfg.timing.trialDuration = 1.2;
+    cfg.timing.targetDuration = 1;
+    cfg.timing.runDuration = 528;
 
     % Time between blocks
     cfg.timing.IBI = 6;
@@ -60,12 +58,8 @@ function [cfg] = setParameters()
     % delay before 1rst stimulus at the start of a run
     cfg.timing.onsetDelay = 8;
 
-    % delay after the end all the stimuli before ending the run
-    cfg.timing.endDelay = 2;
-
     if cfg.debug.do
         cfg.timing.onsetDelay = 0;
-        cfg.timing.endDelay = 0;
     end
 
     cfg.subject.ask = {'grp', 'run'};
@@ -104,6 +98,7 @@ function cfg = setMRI(cfg)
     cfg.mri.triggerKey = 's';
     cfg.mri.triggerNb = 1;
 
+    % TODO: check if this is the right value
     cfg.mri.repetitionTime = 1.75;
 
     cfg.bids.MRI.Instruction = cfg.task.instruction;

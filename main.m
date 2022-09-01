@@ -165,7 +165,7 @@ try
 
     % Pad the runtime to make sure all runs have same duraton
     % (due to random nb of targets)
-    endDelay = cfg.timing.run_duration - loopDuration;
+    endDelay = cfg.timing.runDuration - loopDuration;
     if ~cfg.debug.do
         WaitSecs(endDelay);
     end
