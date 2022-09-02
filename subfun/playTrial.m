@@ -23,9 +23,9 @@ function thisTrial = playTrial(cfg, thisTrial, logFile)
     thisTrial.duration = offset - onset;
     thisTrial.onset = onset - cfg.experimentStart;
 
-    ISI = cfg.timing.trial_duration - thisTrial.duration;
+    ISI = cfg.timing.trialDuration - thisTrial.duration;
     if thisTrial.target
-        ISI = cfg.timing.target_duration - thisTrial.duration;
+        ISI = cfg.timing.targetDuration - thisTrial.duration;
     end
     WaitSecs(ISI);
 

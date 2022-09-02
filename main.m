@@ -143,8 +143,8 @@ try
         end
 
         blockEnd = GetSecs();
-        block_duration = (blockEnd - cfg.experimentStart) - blockStart;
-        talkToMe(cfg, sprintf('\n\nTiming - Block duration: %0.3f seconds\n\n', block_duration));
+        blockDuration = (blockEnd - cfg.experimentStart) - blockStart;
+        talkToMe(cfg, sprintf('\n\nTiming - Block duration: %0.3f seconds\n\n', blockDuration));
 
         WaitSecs(cfg.timing.IBI);
 
@@ -165,7 +165,7 @@ try
 
     % Pad the runtime to make sure all runs have same duraton
     % (due to random nb of targets)
-    endDelay = cfg.timing.run_duration - loopDuration;
+    endDelay = cfg.timing.runDuration - loopDuration;
     if ~cfg.debug.do
         WaitSecs(endDelay);
     end
