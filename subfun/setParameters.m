@@ -32,7 +32,7 @@ function [cfg] = setParameters()
 
     % Instruction
     cfg.text.size = 50;
-    cfg.task.instruction = '\n READY TO START \n\n - Détectez le son cible -';
+    cfg.task.instruction = '\n READY TO START \n\n - Detectez le son cible -';
     cfg.task.name = 'phonoLocalizer';
 
     cfg = setMonitor(cfg);
