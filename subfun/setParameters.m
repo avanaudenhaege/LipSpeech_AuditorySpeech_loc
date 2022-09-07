@@ -26,9 +26,6 @@ function [cfg] = setParameters()
     %% Auditory Stimulation
     cfg.audio.do = true;
     cfg.audio.fs = 44100;
-    if IsWin
-        cfg.audio.fs = 48000;
-    end
     cfg.audio.channels = 2;
 
     %% Task(s)
