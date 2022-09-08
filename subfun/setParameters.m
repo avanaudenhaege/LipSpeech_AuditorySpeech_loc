@@ -11,7 +11,7 @@ function [cfg] = setParameters()
 
     %% Debug mode settings
 
-    cfg.debug.do = true; % To test the script out of the scanner, skip PTB sync
+    cfg.debug.do = false; % To test the script out of the scanner, skip PTB sync
     cfg.debug.smallWin = false; % To test on a part of the screen, change to 1
     cfg.debug.transpWin = true; % To test with trasparent full size screen
 
@@ -24,6 +24,7 @@ function [cfg] = setParameters()
     cfg.eyeTracker.do = false;
 
     %% Auditory Stimulation
+    cfg.audio.devIdx = 2;
     cfg.audio.do = true;
     cfg.audio.fs = 44100;
     cfg.audio.channels = 2;
@@ -49,6 +50,9 @@ function [cfg] = setParameters()
 
     % STIMULI SETTING
     cfg.timing.trialDuration = 1.2;
+    if ispc
+        cfg.timing.trialDuration = 1.05;
+    end
     cfg.timing.targetDuration = 1;
     cfg.timing.runDuration = 528;
 
