@@ -13,11 +13,11 @@ function [cfg] = setParameters()
 
     cfg.debug.do = false; % To test the script out of the scanner, skip PTB sync
     cfg.debug.smallWin = false; % To test on a part of the screen, change to 1
-    cfg.debug.transpWin = true; % To test with trasparent full size screen
+    cfg.debug.transpWin = false; % To test with trasparent full size screen
 
     cfg.verbose = 1;
 
-    cfg.skipSyncTests = 0;
+    cfg.skipSyncTests = 1;
 
     %% Engine parameters
     cfg.testingDevice = 'mri'; % beh or mri
@@ -86,7 +86,7 @@ end
 
 function cfg = setKeyboards(cfg)
     cfg.keyboard.escapeKey = 'ESCAPE';
-    cfg.keyboard.responseKey = {'s', 'd', 'space'};
+    cfg.keyboard.responseKey = {'a', 'b', 'c', 'd'};
     cfg.keyboard.keyboard = [];
     cfg.keyboard.responseBox = [];
 
