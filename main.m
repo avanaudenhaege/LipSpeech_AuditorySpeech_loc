@@ -2,6 +2,8 @@
 clear;
 clc;
 
+more off;
+
 if ~ismac
     close all;
     clear Screen;
@@ -176,9 +178,20 @@ try
 
     cleanUp();
 
+    cpp_bids('uninit');
+    cpp_ptb('uninit');
+    pth = fileparts(mfilename('fullpath'));
+    rmpath(fullfile(pth, 'subfun'));
+
 catch
 
     cleanUp();
+
+    cpp_bids('uninit');
+    cpp_ptb('uninit');
+    pth = fileparts(mfilename('fullpath'));
+    rmpath(fullfile(pth, 'subfun'));
+
     psychrethrow(psychlasterror);
 
 end
