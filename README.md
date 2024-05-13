@@ -57,6 +57,12 @@ the script. Put either 'PC' or 'Scanner'.
 Once you will Run the script you will be asked to select some variables:
 
 1. Group (TO DEFINE): for the moment only controls CON is defined as default
-2. SubID : first 2 letters of Name + first 2 letters of Surname (e.g. Stefania
-   Mattioni == StMa).
+2. SubID
 3. Run Number : 1st or 2nd run
+
+## STIMULI
+
+To be used with a folder named `stimuli` containing the following files stored
+on OSF in `AuditorySpeech-loc_stimuli.zip`
+
+https://osf.io/2xtsn/?view_only=22f09bb4dc5f4a11823103141ca2f735
