@@ -1,8 +1,15 @@
-# Phonology processing regions : LOCALIZER
+# AUDITORY SPEECH REGIONS: localizer
 
-script from Stefania Mattioni - adapted by Alice Van Audenhaege
+script by Alice Van Audenhaege (adapted from S. Mattioni)
 
 Jan2022
+
+## STIMULI
+
+To be used with a folder named `stimuli` containing the following files stored
+on OSF in `AuditorySpeech-loc_stimuli.zip`
+
+https://osf.io/2xtsn/?view_only=22f09bb4dc5f4a11823103141ca2f735
 
 ## RUN DESCRIPTION
 
@@ -21,7 +28,6 @@ Order of sequences randomized for each particpant.
 In each block, all the stimuli of the sequence are presented sequentially.
 
 Trial duration = duration of each audio file + n msec to arrive to 1.2s/trial.
-?????????? OR 1s ????????????
 
 In each block there are either 0, 1 or 2 (randomly decided) targets.
 
@@ -60,9 +66,3 @@ Once you will Run the script you will be asked to select some variables:
 2. SubID
 3. Run Number : 1st or 2nd run
 
-## STIMULI
-
-To be used with a folder named `stimuli` containing the following files stored
-on OSF in `AuditorySpeech-loc_stimuli.zip`
-
-https://osf.io/2xtsn/?view_only=22f09bb4dc5f4a11823103141ca2f735
